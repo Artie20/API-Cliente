@@ -1,3 +1,4 @@
+using API_Cliente.CasosDeUsos;
 using API_Cliente.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,7 +15,7 @@ builder.Services.AddDbContext<APIClienteContext >(SQLbuilder =>
 {
     SQLbuilder.UseSqlServer(builder.Configuration.GetConnectionString("ConexionSql"));
 });
-
+builder.Services.AddScoped<IActualizaClientesCasoDeUso, ActualizaClientesCasoDeUso>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
