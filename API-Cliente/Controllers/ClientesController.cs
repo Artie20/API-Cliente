@@ -1,3 +1,4 @@
+using API_Cliente.CasosDeUsos;
 using API_Cliente.Dtos;
 using API_Cliente.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -9,10 +10,12 @@ namespace API_Cliente.Controllers
     public class ClientesController : Controller
     {
         private readonly APIClienteContext _APIclientecontext;
+        private readonly IActualizaClientesCasoDeUso _actualizaClientesCasoDeUso;
 
-        public ClientesController(APIClienteContext APIclientecontext)
+        public ClientesController(APIClienteContext APIclientecontext, IActualizaClientesCasoDeUso actualizaClientesCasoDeUso)
         {
             _APIclientecontext = APIclientecontext;
+            _actualizaClientesCasoDeUso = actualizaClientesCasoDeUso;
         }
 
         [HttpGet()]
@@ -54,7 +57,10 @@ namespace API_Cliente.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> ActualizaCliente(ClienteDto clientes)
         {
-            throw new NotImplementedException();
+            ClienteDto? result = await _actualizaClientesCasoDeUso.Execute(clientes);
+            if (result == null)
+                return new NotFoundResult();
+            return new OkObjectResult(result);
         }
     }
 }
