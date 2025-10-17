@@ -1,4 +1,4 @@
-﻿using API_Cliente.Dtos;
+using API_Cliente.Dtos;
 using API_Cliente.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,10 +16,11 @@ namespace API_Cliente.Controllers
         }
 
         [HttpGet()]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ClienteDto))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ClienteDto>))]
         public async Task<IActionResult> TraeClientes()
         {
-            throw new NotImplementedException();
+            var result = _APIclientecontext.Cliente.Select(c => c.ToDto()).ToList();
+            return new OkObjectResult(result);
         }
 
         [HttpGet("{id}")]
