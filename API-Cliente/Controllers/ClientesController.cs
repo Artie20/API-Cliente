@@ -34,9 +34,10 @@ namespace API_Cliente.Controllers
 
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
-        public async Task<bool> EliminaCliente(int id)
+        public async Task<IActionResult> EliminaCliente(int id)
         {
-            throw new NotImplementedException();
+            var result = await _APIclientecontext.Delete(id);
+            return new OkObjectResult(result);
         }
 
         [HttpPost()]
