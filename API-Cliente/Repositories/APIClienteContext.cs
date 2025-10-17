@@ -18,6 +18,14 @@ namespace API_Cliente.Repositories
             return await Cliente.FirstOrDefaultAsync(x => x.Id == id);
         }
 
+        public async Task<bool> Delete(int id) 
+         { 
+             ClienteEntity entity = await Get(id);
+             Cliente.Remove(entity);
+             SaveChanges();
+             return true;
+         }
+        
         public async Task<ClienteEntity> Add(CreaClienteDto ClienteDto) //Se hace público y asíncrono Trae a Clientes de Entity y se agrega Add en CrearClientesDto clientesDto
         {
             ClienteEntity entity = new ClienteEntity() // Se asigna clientes Entity a un nuevo elemento
