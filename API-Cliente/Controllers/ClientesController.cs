@@ -32,14 +32,19 @@ namespace API_Cliente.Controllers
         public async Task<IActionResult> TraeCliente(int id)
         {
             ClienteEntity result = await _APIclientecontext.Get(id);
+            if (result == null)
+                return new NotFoundResult();
             return new OkObjectResult(result.ToDto());
         }
 
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(bool))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> EliminaCliente(int id)
         {
             var result = await _APIclientecontext.Delete(id);
+            if (result == null)
+                return new NotFoundResult();
             return new OkObjectResult(result);
         }
 
