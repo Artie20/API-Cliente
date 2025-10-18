@@ -19,10 +19,17 @@ namespace API_Cliente.Repositories
         }
         public async Task<bool> Delete(int id)
         {
-            ClienteEntity entity = await Get(id);
-            Cliente.Remove(entity);
-            SaveChanges();
-            return true;
+            ClienteEntity? entity = await Get(id);
+            if (entity == null)
+            {
+                return false;
+            }
+            else
+            {
+                Cliente.Remove(entity);
+                SaveChanges();
+                return true;
+            }
         }
 
         public async Task<ClienteEntity> Add(CreaClienteDto ClienteDto) //Se hace público y asíncrono Trae a Clientes de Entity y se agrega Add en CrearClientesDto clientesDto
