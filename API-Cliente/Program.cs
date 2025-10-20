@@ -16,7 +16,19 @@ builder.Services.AddDbContext<APIClienteContext >(SQLbuilder =>
     SQLbuilder.UseSqlServer(builder.Configuration.GetConnectionString("ConexionSql"));
 });
 builder.Services.AddScoped<IActualizaClientesCasoDeUso, ActualizaClientesCasoDeUso>();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("MiPoliticaCORS", policy =>
+    {
+        policy.WithOrigins("*")
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
+
+app.UseCors("MiPoliticaCORS");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
